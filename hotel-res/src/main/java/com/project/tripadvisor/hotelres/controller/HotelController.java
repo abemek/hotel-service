@@ -3,10 +3,7 @@ package com.project.tripadvisor.hotelres.controller;
 import com.project.tripadvisor.hotelres.domain.Hotel;
 import com.project.tripadvisor.hotelres.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,21 +13,25 @@ public class HotelController {
     @Autowired
     HotelService hotelService;
 
-    @GetMapping("/hotel/add")
+    @PostMapping("/hotel/add")
     public Long addHotel(Hotel hotel){
         return hotelService.addHotel(hotel);
     }
 
-    @GetMapping("/hotel/update")
+    @PutMapping("/hotel/update")
     public Long updateHotel(Hotel hotel){
         return hotelService.updateHotel(hotel);
+    }
+
+    @DeleteMapping("/hotel/delete")
+    public void deleteHotel(Hotel hotel){
+        hotelService.deleteHotel(hotel);
     }
 
     @GetMapping("/hotels/")
     public List<Hotel> getHotels(@RequestParam("city") String city){
         return hotelService.findAllByCity(city);
     }
-
     @GetMapping("/allhotels")
     public List<Hotel> getAllHotels(){
         return hotelService.findAllHotels();

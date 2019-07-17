@@ -5,16 +5,13 @@ import com.project.tripadvisor.hotelres.domain.Room;
 import com.project.tripadvisor.hotelres.service.ReservationService;
 import com.project.tripadvisor.hotelres.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-@Controller
-@RequestMapping("api")
+@RestController
+@RequestMapping("/api")
 public class ReservationController {
     @Autowired
     ReservationService reservationService;
@@ -22,7 +19,7 @@ public class ReservationController {
     @Autowired
     RoomService roomService;
 
-    @PostMapping("/hotel-res/reserve/")
+    @PostMapping("/reserve/")
     public void reserve(@RequestParam("email") String email,
                         @RequestParam("checkIn")String checkIn,
                         @RequestParam("checkOut") String checkOut,
@@ -32,5 +29,10 @@ public class ReservationController {
         LocalDate cOut = LocalDate.parse(checkOut, formatter);
         Room room = roomService.findRoom(roomId);
         reservationService.reserve(new Reservation(email,cIn,cOut,room));
+    }
+
+    @PutMapping("/clear")
+    public void clear(Long roomId){
+        roomService.clear(roomId);
     }
 }

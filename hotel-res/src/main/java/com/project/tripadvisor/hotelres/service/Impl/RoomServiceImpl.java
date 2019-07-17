@@ -14,6 +14,11 @@ public class RoomServiceImpl implements RoomService {
     RoomRepo roomRepo;
 
     @Override
+    public List<Room> findAll() {
+        return roomRepo.findAll();
+    }
+
+    @Override
     public List<Room> findHotelRooms(String hotelId) {
         return roomRepo.findHotelRooms(hotelId);
     }
@@ -32,5 +37,12 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public Long addRoom(Room room) {
         return roomRepo.save(room).getId();
+    }
+
+    @Override
+    public void clear(Long roomId) {
+      Room room =  roomRepo.findById(roomId).get();
+      room.setStatus(1);
+      roomRepo.save(room);
     }
 }
