@@ -31,7 +31,7 @@ public class ReservationController {
         reservationService.reserve(new Reservation(email,cIn,cOut,room));
     }
 
-    @PutMapping("/clear")
+    @PutMapping("/clear/")
     public void clear(Long roomId){
         roomService.clear(roomId);
     }

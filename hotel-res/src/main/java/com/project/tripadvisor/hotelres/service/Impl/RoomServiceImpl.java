@@ -42,7 +42,9 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public void clear(Long roomId) {
       Room room =  roomRepo.findById(roomId).get();
-      room.setStatus(1);
-      roomRepo.save(room);
+      if(room.getStatus() == 0) {
+          room.setStatus(1);
+          roomRepo.save(room);
+      }
     }
 }
